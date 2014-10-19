@@ -1,0 +1,31 @@
+<script id="tableRow" type="text/html">
+  <tr>
+    <td>
+      <a href="#" id="city-{{ id }}">{{ name }}</a>
+    </td>
+    <td>
+      {{ main.temp }}
+    </td>
+    <td>
+      <img src="http://www.openweathermap.org/img/w/{{ weather.icon }}.png" />
+    </td>
+  </tr>
+</script>
+
+
+<script id="cityInfo" type="text/html">
+  <dl class="dl-horizontal">
+  <dt>Location</dt>
+    <dd>Latitude:{{ coord.lat }} Longtitude: {{ coord.lon }}</dd>
+  <dt>Current conditions</dt>
+    <dd>{{ weather.main }}, {{ weather.description }}</dd>
+  <dt>Icon</dt>
+    <dd><img src="http://www.openweathermap.org/img/w/{{ weather.icon }}.png" /></dd>
+  <dt>Temperature</dt>
+    <dd>{{ main.temp }} ({{ main.temp_min }} - {{ main.temp_max }})</dd>
+  <dt>Atmospheric pressure</dt>
+    <dd>{{ main.pressure }}</dd> 
+  <dt>Humidity</dt>
+    <dd>{{ main.humidity }}</dd>             
+</dl>
+</script>
