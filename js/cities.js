@@ -1,8 +1,13 @@
 var that;
+// Easiest way to define Enum 
+var SORT = function(){return {'ASC':0,'DESC':1}}();
+
+var demoCities = [{name: "London", id: 2643743}, {name: "Luton", id: 2643339}, {name: "Manchester", id: 2643123}, {name: "Birmingham", id: 2655603}];
 
 function Cities() {
 	that = this;	
 	var loadCallback;
+	var temperatureSortOrder = SORT.ASC;
 	var _cities = new Array();
 	this.getCities = function() { return _cities; };
 	this.setCities = function(cities) { _cities = cities; };
@@ -11,12 +16,12 @@ function Cities() {
 
 Cities.prototype = {
 	constructor: Cities,
-	sortByField:function (fields,direction) {
+	sortByField:function (field,direction) {
 		this.getCities().sort(function(a, b){
-			if(direction) {
- 				return eval("b."+fields) - eval("a."+fields);
+			if(direction == SORT.DESC) {
+ 				return eval("b."+field) - eval("a."+field);
  			} else {
- 				return eval("a."+fields) - eval("b."+fields);
+ 				return eval("a."+field) - eval("b."+field);
  			}
 		});
 	},
@@ -33,9 +38,8 @@ Cities.prototype = {
 	},
 	citiesLoadedCallback:function(data) {
 		that.setCities(data.list); 
-		that.sortByField("main.temp",temperatureSortOrder);
+		that.sortByTemperature(that.temperatureSortOrder);
 		that.drawCities();	
-		//console.log(that.getCities());
 		if(loadCallback) { loadCallback(that.getCities()); }
 	},
 	drawCities:function() {
@@ -48,10 +52,11 @@ Cities.prototype = {
 	},
 	getCity:function (idCity) {
 		var city = this.getCityById(idCity);
+		var view = ich.cityInfo(city);
+		
 		$('#myModal .modal-title').empty().append(city.name);
-				var view = ich.cityInfo(city);
-    			$("#myModal .modal-body").empty().append(view);
-				$('#myModal').modal('show');
+    	$("#myModal .modal-body").empty().append(view);
+		$('#myModal').modal('show');
 	},	
 	getCityById:function (idCity) {
 		var citiesList = this.getCities();

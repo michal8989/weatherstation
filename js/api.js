@@ -1,5 +1,3 @@
-
-
 function Api() {}
 
 Api.prototype = {
